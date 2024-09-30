@@ -1,8 +1,10 @@
 # dropbear-MOD
 
-## install
+## LINK DE INSTALÇÃO
 
-`wget --no-cache https://github.com/PhoenixxZ2023/dropbear-MOD/raw/main/install; chmod +x install; ./install`
+````
+wget --no-cache https://github.com/PhoenixxZ2023/dropbear-MOD/raw/main/install; chmod +x install; ./install
+````
 
 luego de la instalacion requiere activar dropbear
 
