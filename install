@@ -1,26 +1,34 @@
-rm -rf ./$0
+#!/bin/bash
 
+# Verifica se está sendo executado como root
+if [ "$EUID" -ne 0 ]; then
+  echo "O script deve ser executado como root. Utilize 'sudo' para executar o script."
+  exit 1
+fi
+
+# Identifica o sistema operacional
 source /etc/os-release
 
+# Define os pacotes a serem instalados
 inst='libtomcrypt1 libtommath1 zlib1g'
 
+# Adiciona pacote extra baseado na versão do Ubuntu
 case $VERSION_ID in
     20.04*|20.10*|21.04*|21.10*|22.04*) inst+=' libcrypt1';;
 esac
 
-apt update -y; apt install -y $inst
+# Cria uma pasta temporária e entra nela
+mkdir -p tmp && cd tmp
 
-mkdir tmp
-
-cd tmp
-
+# Baixa os pacotes do Dropbear
 wget --no-cache https://github.com/PhoenixxZ2023/dropbear-MOD/raw/main/dropbear-bin_2020.81-5_amd64-v2.deb
 wget --no-cache https://github.com/PhoenixxZ2023/dropbear-MOD/raw/main/dropbear_2020.81-5_all-v2.deb
 
+# Instala os pacotes baixados
 dpkg -i *.deb
 
-cd ../
+# Retorna ao diretório anterior e remove a pasta temporária
+cd .. && rm -rf tmp
 
-rm -rf tmp
-
+# Finaliza o script
 exit 0
